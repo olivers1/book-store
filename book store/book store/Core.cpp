@@ -7,6 +7,7 @@ void Core::Initialize()
 {
 	Page* mainMenu = new Page(nullptr, "Main Menu");
 	m_state = mainMenu;		// set mainMenu as default page
+	m_children = &(m_state->GetChildVec());	// set pointer to point at mainMenu's child vector containing all its children pages
 
 	Page* add = new Page(mainMenu, "Add Book");		// creating page object on the heap and assigning parent pointer to its member variable
 	Page* addTitle = new Page(add, "Author");
@@ -69,7 +70,11 @@ void Core::Execute()
 void Core::ShowMenu()
 {
 	cout << "\nPage name: " << m_state->GetPageName();
-	m_state->GetChildName();
+	cout << "\nChildren: ";
+	for (Page child : *m_children)
+	{
+		cout << child.GetPageName() << ", ";
+	}
 }
 
 void Core::ReadInput()
@@ -82,6 +87,6 @@ void Core::ReadInput()
 void Core::UpdateState()
 {
 	m_state = &(m_state->GetChild(m_input));	// update page child pointer to point at selected child menu
-	m_child = &(m_state->GetChildVec());
+	m_children = &(m_state->GetChildVec());	// update child vector pointer to point at children pages of new parent
 }
 
