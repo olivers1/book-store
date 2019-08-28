@@ -3,9 +3,9 @@
 
 using namespace std;
 
-void Page::AddChild(Page& pageObj)
+void Page::SetParent(Page& parent)
 {
-	m_vecChildren.push_back(pageObj);
+	m_parent = &parent;
 }
 
 const string& Page::GetPageName()
@@ -14,14 +14,16 @@ const string& Page::GetPageName()
 }
 
 /*
-const string& Page::GetChildName()
+Page& Page::GetParent()
 {
-	for (Page child : m_vecChildren)
-	{
-		cout << "\n" << child.GetPageName();
-	}
+	return *m_parent;
 }
 */
+
+void Page::SetChild(Page& pageObj)
+{
+	m_vecChildren.push_back(pageObj);
+}
 
 Page& Page::GetChild(int& i)
 {
