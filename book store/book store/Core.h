@@ -6,7 +6,7 @@ class Core
 {
 private:
 	Page* m_state;
-	vector<Page>* m_child;
+	vector<Page>* m_children;
 	int m_input;
 public:
 	void Initialize();
