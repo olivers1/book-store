@@ -5,7 +5,8 @@
 class Core
 {
 private:
-	Page* m_state;
+	Page* m_page;
+	Page* m_parent;
 	vector<Page>* m_children;
 	int m_input;
 public:
