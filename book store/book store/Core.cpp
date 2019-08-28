@@ -26,7 +26,7 @@ void Core::Initialize()
 
 	Page* edit = new Page(mainMenu, "Edit Book");
 
-	// DON'T KNOW HOW TO DO WITH searchResult that has findTitle, findAuthor, findYear, findStock as parents
+	// DON'T KNOW HOW TO DO WITH searchResult that has findTitle, findAuthor, findYear, findStock as parents. wtf
 	Page* searchResult = new Page(findTitle, "Search Result");
 
 
