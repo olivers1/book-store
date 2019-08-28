@@ -20,11 +20,11 @@ public:
 
 	const string& GetPageName();
 
-	const string& GetChildName();
+	vector<Page>& GetChildVec();
+
+	//const string& GetChildName();
 
 	Page& GetChild(int&);
-
-	vector<Page>& GetChildVec();
 
 	const int& GetChildSize();
 };
