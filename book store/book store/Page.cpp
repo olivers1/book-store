@@ -13,6 +13,7 @@ const string& Page::GetPageName()
 	return m_pageName;
 }
 
+/*
 const string& Page::GetChildName()
 {
 	for (Page child : m_vecChildren)
@@ -20,6 +21,7 @@ const string& Page::GetChildName()
 		cout << "\n" << child.GetPageName();
 	}
 }
+*/
 
 Page& Page::GetChild(int& i)
 {
