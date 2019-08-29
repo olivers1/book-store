@@ -5,14 +5,15 @@ using namespace std;
 
 void Core::Initialize()
 {
-	Page* mainMenu = new Page(nullptr, "Main Menu");
+	Page* test = new Page(nullptr, "test");
+	Page* mainMenu = new Page(test, "Main Menu");
 	m_page = mainMenu;		// set mainMenu as default page
-	//m_parent = &(m_page->GetParent());	// update parent variable with parent of current page	MAYBE DOES NOT WORK BECAUSE OF NULLPTR
-	m_children = &(m_parent->GetChildVec());	// set pointer to point at mainMenu's child vector containing all its children pages
+	m_parent = &(mainMenu->GetParent());	// set pointer to point at mainMenu's parent
+	m_children = &(m_page->GetChildVec());	// set pointer to point at mainMenu's child vector containing all its children pages
 
 	// add book
 	Page* addBook = new Page(mainMenu, "Add Book");		// creating page object on the heap and assigning parent pointer to its member variable
-	
+
 	Page* setTitle = new Page("Set Title");		// create page without assigning a parent to it
 	setTitle->SetParent(*addBook);	// set parent of the page
 
@@ -30,7 +31,7 @@ void Core::Initialize()
 
 	Page* displayBook = new Page("Display Book");
 	displayBook->SetParent(*setStock);
-	
+
 	addBook->SetChild(*setTitle);	// add child to the page's child vector
 	setTitle->SetChild(*setAuthor);
 	setAuthor->SetChild(*setYear);
@@ -43,6 +44,7 @@ void Core::Initialize()
 	Page* titleFind = new Page(findBook, "Search by Title");
 
 	Page* authorFind = new Page(findBook, "Search by Author");
+	authorFind->SetChild(*mainMenu);
 
 	Page* yearFind = new Page(findBook, "Search by Publication Year");
 
@@ -83,7 +85,7 @@ void Core::Execute()
 void Core::ShowMenu()
 {
 	cout << "\nPage: " << m_page->GetPageName();
-	//cout << "\n (Parent: " << m_parent->GetPageName() << ")";
+	cout << "\nParent: " << m_parent->GetPageName();
 	cout << "\nChildren: ";
 	for (Page child : *m_children)
 	{
@@ -101,9 +103,7 @@ void Core::ReadInput()
 void Core::UpdateState()
 {
 	m_page = &(m_page->GetChild(m_input));	// update page child pointer to point at selected child menu
-	
-	//m_parent = &(m_page->GetParent());		// update parent variable with parent of current page
-	
+	m_parent = &(m_page->GetParent());	// update parent pointer to point at the parent of current page
 	m_children = &(m_page->GetChildVec());	// update child vector pointer to point at children pages of new parent
 }
 
