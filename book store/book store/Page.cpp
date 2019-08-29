@@ -3,6 +3,11 @@
 
 using namespace std;
 
+Page& Page::GetParent()
+{
+	return *m_parent;
+}
+
 void Page::SetParent(Page& parent)
 {
 	m_parent = &parent;
@@ -12,13 +17,6 @@ const string& Page::GetPageName()
 {
 	return m_pageName;
 }
-
-/*
-Page& Page::GetParent()
-{
-	return *m_parent;
-}
-*/
 
 void Page::SetChild(Page& pageObj)
 {
