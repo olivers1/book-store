@@ -20,13 +20,13 @@ public:
 
 	void SetChild(Page&);
 
+	vector<Page>& GetChildVec();
+
 	void SetParent(Page&);
 
-	//Page& GetParent();	// GETS THE NULLPTR AT FIRST TIME, MIGHT BE REASON WHY IT CRASHES?
+	Page& GetParent();
 
 	const string& GetPageName();
-
-	vector<Page>& GetChildVec();
 
 	Page& GetChild(int&);
 
