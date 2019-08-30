@@ -5,8 +5,10 @@ using namespace std;
 
 void Core::Initialize()
 {
-	Page* test = new Page(nullptr, "test");
-	Page* mainMenu = new Page(test, "Main Menu");
+	Page* dummyPage = new Page(nullptr, "dummyPage");	// dummy page to avoid error when parent pointer is pointing to 'nullptr'
+	Page* mainMenu = new Page(dummyPage, "Main Menu");
+	dummyPage->SetChild(*mainMenu);
+
 	m_page = mainMenu;		// set mainMenu as default page
 	m_parent = &(mainMenu->GetParent());	// set pointer to point at mainMenu's parent
 	m_children = &(m_page->GetChildVec());	// set pointer to point at mainMenu's child vector containing all its children pages
@@ -14,43 +16,32 @@ void Core::Initialize()
 	// add book
 	Page* addBook = new Page(mainMenu, "Add Book");		// creating page object on the heap and assigning parent pointer to its member variable
 
-	Page* setTitle = new Page("Set Title");		// create page without assigning a parent to it
-	setTitle->SetParent(*addBook);	// set parent of the page
+	Page* setTitle = new Page(addBook, "Set Title");		// create page without assigning a parent to it
 
-	Page* setAuthor = new Page("Set Author");
-	setAuthor->SetParent(*setTitle);
+	Page* setAuthor = new Page(setTitle, "Set Author");
 
-	Page* setYear = new Page("Set Year");
-	setYear->SetParent(*setAuthor);
+	Page* setYear = new Page(setAuthor, "Set Year");
 
-	Page* setPrice = new Page("Set Price");
-	setPrice->SetParent(*setYear);
+	Page* setPrice = new Page(setYear, "Set Price");
 
-	Page* setStock = new Page("Set Stock");
-	setStock->SetParent(*setPrice);
-
-	Page* displayBook = new Page("Display Book");
-	displayBook->SetParent(*setStock);
-
-	addBook->SetChild(*setTitle);	// add child to the page's child vector
-	setTitle->SetChild(*setAuthor);
-	setAuthor->SetChild(*setYear);
-	setYear->SetChild(*setPrice);
-	setPrice->SetChild(*displayBook);
-	displayBook->SetChild(*mainMenu);
+	Page* setStock = new Page(setPrice, "Set Stock");
 
 	// find book
 	Page* findBook = new Page(mainMenu, "Search Book");
+
 	Page* titleFind = new Page(findBook, "Search by Title");
+	
+	Page* authorFind = new Page(titleFind, "Search by Author");
 
-	Page* authorFind = new Page(findBook, "Search by Author");
-	authorFind->SetChild(*mainMenu);
+	Page* yearFind = new Page(authorFind, "Search by Publication Year");
 
-	Page* yearFind = new Page(findBook, "Search by Publication Year");
+	Page* priceFind = new Page(yearFind, "Search by Price");
 
-	Page* priceFind = new Page(findBook, "Search by Price");
+	Page* stockFind = new Page(priceFind, "Search by no. Items in Stock");
 
-	Page* stockFind = new Page(findBook, "Search by no. Items in Stock");
+	addBook->SetChild(*setTitle);
+	setTitle->SetChild(*setAuthor);
+	setAuthor->SetChild(*setYear);
 
 	findBook->SetChild(*titleFind);
 	findBook->SetChild(*authorFind);
@@ -60,6 +51,7 @@ void Core::Initialize()
 
 	// sell book
 	Page* sellBook = new Page(mainMenu, "Sell Book");
+	sellBook->SetChild(*mainMenu);
 
 	// edit book
 	Page* editBook = new Page(mainMenu, "Edit Book");
@@ -69,7 +61,6 @@ void Core::Initialize()
 	mainMenu->SetChild(*findBook);
 	mainMenu->SetChild(*sellBook);
 	mainMenu->SetChild(*editBook);
-
 }
 
 void Core::Execute()
@@ -84,8 +75,8 @@ void Core::Execute()
 
 void Core::ShowMenu()
 {
-	cout << "\nPage: " << m_page->GetPageName();
 	cout << "\nParent: " << m_parent->GetPageName();
+	cout << "\nPage: " << m_page->GetPageName();
 	cout << "\nChildren: ";
 	for (Page child : *m_children)
 	{
