@@ -75,7 +75,7 @@ void Core::Execute()
 
 void Core::ShowMenu()
 {
-	cout << "\nParent: " << m_parent->GetPageName();
+	cout << "\nParent: " << m_parent->GetPageName();	//--Hamid: m_page -> GetParent() -> GetPageName()
 	cout << "\nPage: " << m_page->GetPageName();
 	cout << "\nChildren: ";
 	for (Page child : *m_children)
@@ -93,6 +93,8 @@ void Core::ReadInput()
 
 void Core::UpdateState()
 {
+	//	Hamid: You just need to update the m_page, then you can update its parent and child from m_page's methods
+
 	m_page = &(m_page->GetChild(m_input));	// update page child pointer to point at selected child menu
 	m_parent = &(m_page->GetParent());	// update parent pointer to point at the parent of current page
 	m_children = &(m_page->GetChildVec());	// update child vector pointer to point at children pages of new parent
