@@ -8,17 +8,25 @@ using namespace std;
 class Page
 {
 private:
-	Page* m_parent;		// pointer to parent page
-	vector<Page>* m_child;	// pointer to vector that contains the children pages of current page
+	vector<Page> m_vecParents;		// pointer to parent page
 	vector<Page> m_vecChildren;		// vector containing all children of current page
 
 	string m_pageName;		// name of the page
 public:
 	Page(string pageName) : m_pageName(pageName) {}
 
-	Page(Page* parent, string pageName) : m_parent(parent), m_pageName(pageName) {}
+	Page(string pageName, Page* parent)
+	{
+		m_pageName = pageName;
+		SetParent(*parent);
+	}
 
-	Page(Page* parent, vector<Page>* , string pageName) : m_parent(parent), m_pageName(pageName), m_child(&m_vecChildren) {}
+	Page(string& pageName, Page* parent, Page& child)
+	{
+		m_pageName = pageName;
+		SetParent(*parent);
+		SetChild(child);
+	}
 
 	void SetChild(Page&);
 
@@ -28,10 +36,9 @@ public:
 
 	void SetParent(Page&);
 
-	Page& GetParent();
+	vector<Page>& GetParentVec();
 
 	const string& GetPageName();
 
-	const int& GetChildSize();
 };
 
