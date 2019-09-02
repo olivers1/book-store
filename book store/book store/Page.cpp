@@ -3,29 +3,9 @@
 
 using namespace std;
 
-Page& Page::GetParent()
-{
-	return *m_parent;
-}
-
-void Page::SetParent(Page& parent)
-{
-	m_parent = &parent;
-}
-
-const string& Page::GetPageName()
-{
-	return m_pageName;
-}
-
 void Page::SetChild(Page& pageObj)
 {
 	m_vecChildren.push_back(pageObj);
-}
-
-Page& Page::GetChild(int& i)
-{
-	return m_vecChildren[i];
 }
 
 vector<Page>& Page::GetChildVec()
@@ -33,7 +13,22 @@ vector<Page>& Page::GetChildVec()
 	return m_vecChildren;
 }
 
-const int& Page::GetChildSize()
+Page& Page::GetChild(int& i)
 {
-	return m_vecChildren.size();
+	return m_vecChildren[i];
+}
+
+void Page::SetParent(Page& pageObj)
+{
+	m_vecParents.push_back(pageObj);
+}
+
+vector<Page>& Page::GetParentVec()
+{
+	return m_vecParents;
+}
+
+const string& Page::GetPageName()
+{
+	return m_pageName;
 }
