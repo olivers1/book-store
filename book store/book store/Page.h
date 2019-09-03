@@ -15,10 +15,11 @@ private:
 public:
 	Page(string pageName) : m_pageName(pageName) {}
 
-	Page(string pageName, Page* parent)
+	Page(string pageName, Page& parent)
 	{
 		m_pageName = pageName;
-		SetParent(*parent);
+		SetParent(parent);
+		parent.SetChild(*this);
 	}
 
 	Page(string& pageName, Page* parent, Page& child)
@@ -39,6 +40,8 @@ public:
 	vector<Page>& GetParentVec();
 
 	const string& GetPageName();
+
+
 
 };
 
