@@ -5,26 +5,24 @@ using namespace std;
 
 void Core::Initialize()
 {
-	Page* dummyPage = new Page("dummyPage", nullptr);	// dummy page to avoid error when parent pointer is pointing to 'nullptr'
-	Page* mainMenu = new Page("Main Menu", dummyPage);
-
-	dummyPage->SetChild(*mainMenu);
+	Page* mainMenu = new Page("Main Menu");
 
 	m_page = mainMenu;		// set mainMenu as default page
 
-	Page* addBook = new Page("Add Book", mainMenu);
-	Page* setTitle = new Page("Add Book", addBook);
-	Page* setAuthor = new Page("Set Author", setTitle);
-	Page* setYear = new Page("Set Year", setAuthor);
-	Page* setPrice = new Page("Set Price", setYear);
-	Page* setStock = new Page("Set Stock", setPrice);
+	Page* addBook = new Page("Add Book", *mainMenu);
+	Page* setTitle = new Page("Set Title", *addBook);
+	Page* setAuthor = new Page("Set Author", *setTitle);
+	Page* setYear = new Page("Set Year", *setAuthor);
+	Page* setPrice = new Page("Set Price", *setYear);
+	Page* setStock = new Page("Set Stock", *setPrice);
 
-	mainMenu->SetChild(*addBook);
-	addBook->SetChild(*setTitle);
-	setTitle->SetChild(*setYear);
-	setYear->SetChild(*setPrice);
-	setPrice->SetChild(*setStock);
-	setStock->SetChild(*mainMenu);
+	//mainMenu->SetChild(*addBook);
+	//
+	//addBook->SetChild(*setTitle);
+	//setTitle->SetChild(*setYear);
+	//setYear->SetChild(*setPrice);
+	//setPrice->SetChild(*setStock);
+	//setStock->SetChild(*mainMenu);
 
 	//// add book
 	//Page* addBook = new Page(mainMenu, "Add Book");		// creating page object on the heap and assigning parent pointer to its member variable
